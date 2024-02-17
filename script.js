@@ -1,71 +1,72 @@
-const choices = ["rock","paper","scissors"];
-const winners = [];
+let playerPoints = 0;
+let computerPoints = 0;
+let roundsPlayed = 0;
 
-function game(){
-  for(i = 0;i <= 4;i++){
-    playRound(i);
-  }
-  document.querySelector("button").textContent = "Play a new game";
-  logWins();
+function startGame() {
+    playerPoints = 0;
+    computerPoints = 0;
+    roundsPlayed = 0;
+    document.getElementById("result").innerHTML = '';
+    document.getElementById("playGameButton").style.display = "none";
+    document.getElementById("gameButtons").style.display = "block";
+    document.getElementById("resetButton").style.display = "none";
 }
-function playRound(round){
-  const playerSelection = getplayerChoice();
-  const computerSelection = getComputerChoice();
-  const winner = checkWinner(playerSelection,computerSelection);
-  winners.push(winner);
-  logRound(playerSelection,computerSelection,winner,round);
-}
-function getplayerChoice() {
-  let input = prompt("Type Rock, Paper, or Scissors");
-  while (input == null) {
-    input = prompt("Type Rock, Paper, or Scissors");
-  }
-  input = input.toLowerCase();
-  let check = validateInput(input);
-  while (check == false) {
-    input = prompt(
-      "Type Rock, Paper, or Scissors. Spelling needs to be exact, but capitilization doesnt matter"
-    );
-    while (input == null) {
-      input = prompt("Type Rock, Paper, or Scissors");
+
+function playRound(playerChoice) {
+    const computerChoice = getComputerChoice();
+    const winner = checkWinner(playerChoice, computerChoice);
+    updatePoints(winner);
+    displayResult(playerChoice, computerChoice, winner);
+    roundsPlayed++;
+    if (playerPoints === 5 || computerPoints === 5) {
+        endGame();
     }
-    input = input.toLowerCase();
-    check = validateInput(input);
-  }
-  return input;
 }
-function getComputerChoice(){
-    return choices[Math.floor(Math.random()*choices.length)];
+
+function getComputerChoice() {
+    const choices = ['Rock', 'Paper', 'Scissors'];
+    return choices[Math.floor(Math.random() * choices.length)];
 }
-function validateInput(choice){
-  return choices.includes(choice);
-  }
-function checkWinner(choiceP,choiceC){
-  if(choiceP === choiceC){
-    return "Tie";
-  }else if(
-    (choiceP === "rock" && choiceC === "scissors") ||
-    (choiceP === "paper" && choiceC === "rock") ||       
-    (choiceP === "scissors" && choiceC === "paper")
-  ) {
-    return "Player";
-   }else{
-    return "Computer";
-   }
-  }
-  function logWins(){
-   let playerWins = winners.filter((item) => item =="Player").length;
-   let computerWins = winners.filter((item) => item == "Computer").length;
-   let ties = winners.filter((item) => item == "Tie").length;
-   console.log("Results:");
-   console.log("Player Wins:",playerWins);
-   console.log("Computer Wins:",computerWins);
-   console.log("Ties:",ties);
-  }
-    function logRound(playerChoice, computerChoice, winner, round) {
-      console.log("Round:", round);
-      console.log("Player Chose:", playerChoice);
-      console.log("Computer Chose:", computerChoice);
-      console.log(winner, "Won the Round");
-      console.log("-------------------------------");
+
+function checkWinner(playerChoice, computerChoice) {
+    if (playerChoice === computerChoice) {
+        return 'Tie';
+    } else if (
+        (playerChoice === 'Rock' && computerChoice === 'Scissors') ||
+        (playerChoice === 'Paper' && computerChoice === 'Rock') ||
+        (playerChoice === 'Scissors' && computerChoice === 'Paper')
+    ) {
+        return 'Player';
+    } else {
+        return 'Computer';
     }
+}
+
+function updatePoints(winner) {
+    if (winner === 'Player') {
+        playerPoints++;
+    } else if (winner === 'Computer') {
+        computerPoints++;
+    }
+}
+
+function displayResult(playerChoice, computerChoice, winner) {
+    document.getElementById("result").innerHTML = `
+        <p>You chose ${playerChoice}, Computer chose ${computerChoice}.</p>
+        <p>${winner} wins this round!</p>
+        <p>Player Points: ${playerPoints}</p>
+        <p>Computer Points: ${computerPoints}</p>
+    `;
+}
+
+function endGame() {
+    document.getElementById("gameButtons").style.display = "none";
+    document.getElementById("resetButton").style.display = "block";
+    document.getElementById("result").innerHTML += `<p>Game over! ${playerPoints === 5 ? 'Player' : 'Computer'} wins!</p>`;
+}
+
+function resetGame() {
+    document.getElementById("playGameButton").style.display = "block";
+    document.getElementById("resetButton").style.display = "none";
+    startGame();
+}

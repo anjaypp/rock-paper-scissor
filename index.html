@@ -3,15 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissor</title>
+    <title>Rock Paper Scissors Game</title> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
-    <script src="script.js"></script>
-    <h1>Rock Paper Scissors</h1>
-    <button onclick = "game()">Start Game</button>
-    <p>
-        This game is played on console. Press CTRL Shift J
-        to open the console.
-    </p>
+   
+    <div class="container">
+        <h1 class="heading">Rock Paper Scissors Game</h1>
+        <h2>First to reach 5 point wins</h2>
+        <h2>Click to choose a move</h2>
+        <button id="playGameButton" onclick="startGame()">Play Game</button>
+        <div id="gameButtons" style="display: none;">
+
+            <img class="rock" src="img/stone.png" onclick="playRound('Rock')">
+
+            <img class="paper" src="img/paper.png" onclick="playRound('Paper')">
+    
+            <img class="scissors" src="img/scissors.png"  onclick="playRound('Scissors')">
+
+        </div>
+        <div class="result" id="result"></div>
+        <button class="reset-button" id="resetButton" style="display: none;" onclick="resetGame()">Reset Game</button>
+    </div>
+
 </body>
 </html>
