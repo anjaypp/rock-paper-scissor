@@ -1,7 +1,4 @@
-This is a project i built based on The Odin's Project Curriculum.
-
-https://www.theodinproject.com/lessons/foundations-rock-paper-scissors
-
+It's a simple game where the user plays Rock, Paper, Scissors against the computer built using HTML,CSS,JS.
 Try it out: https://anjaypp.github.io/rock-paper-scissor/
 
 
